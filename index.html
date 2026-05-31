@@ -666,50 +666,124 @@
 
   .budget-scroll { overflow-x: auto; }
 
-  /* ─── REFLECTION ─── */
-  #reflection .reflection-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-top: 2.5rem;
+  /* ─── PHOTO GALLERY ─── */
+  #gallery .gallery-controls {
+    display: flex;
+    gap: 0.75rem;
+    margin: 2.5rem 0 2rem;
+    flex-wrap: wrap;
+    align-items: center;
   }
-  @media (max-width: 900px) { #reflection .reflection-grid { grid-template-columns: 1fr; } }
+  .gallery-toggle-btn {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 100px;
+    border: 1px solid rgba(46,158,143,0.3);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .gallery-toggle-btn.active,
+  .gallery-toggle-btn:hover {
+    background: rgba(46,158,143,0.1);
+    border-color: var(--teal-light);
+    color: var(--teal-light);
+  }
 
-  .reflection-card {
-    border-radius: var(--radius-lg);
-    border: 1px dashed rgba(255,255,255,0.1);
-    padding: 2.5rem 2rem;
+  .photo-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 0;
+  }
+  .photo-grid.grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .photo-grid.grid-6 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 768px) {
+    .photo-grid.grid-3,
+    .photo-grid.grid-6 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .photo-grid.grid-3,
+    .photo-grid.grid-6 { grid-template-columns: 1fr; }
+  }
+
+  .photo-slot {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: rgba(255,255,255,0.02);
+    border: 1.5px dashed rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: var(--transition);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-height: 280px;
-    transition: var(--transition);
+    gap: 0.5rem;
+  }
+  .photo-slot:hover {
+    border-color: rgba(78,200,184,0.4);
+    background: rgba(46,158,143,0.05);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+  }
+  .photo-slot input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    background: rgba(255,255,255,0.01);
+    width: 100%;
+    height: 100%;
+    z-index: 2;
   }
-  .reflection-card:hover { border-color: rgba(46,158,143,0.3); background: rgba(46,158,143,0.04); transform: translateY(-4px); }
-  .reflection-icon { font-size: 2.5rem; margin-bottom: 1.25rem; opacity: 0.7; }
-  .reflection-title { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 0.5rem; }
-  .reflection-desc { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; line-height: 1.7; }
-  .reflection-upload {
-    display: inline-flex;
+  .photo-slot img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    z-index: 1;
+    display: none;
+  }
+  .photo-slot.has-image img { display: block; }
+  .photo-slot.has-image .slot-placeholder { display: none; }
+  .photo-slot.has-image:hover::after {
+    content: '✎ Replace';
+    position: absolute;
+    inset: 0;
+    background: rgba(13,29,47,0.65);
+    display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 1.25rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--teal);
-    border: 1px solid rgba(46,158,143,0.3);
-    border-radius: 100px;
-    padding: 5px 14px;
-    transition: var(--transition);
+    color: var(--teal-light);
+    z-index: 3;
+    border-radius: var(--radius-md);
   }
-  .reflection-card:hover .reflection-upload { background: rgba(46,158,143,0.1); color: var(--teal-light); }
+  .slot-placeholder { pointer-events: none; z-index: 0; }
+  .slot-icon { font-size: 1.75rem; opacity: 0.4; }
+  .slot-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+  .slot-sub { font-size: 0.62rem; color: rgba(122,143,166,0.5); }
+
+  .gallery-note {
+    margin-top: 1.5rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .gallery-note::before { content: '💡'; font-size: 0.85rem; }
 
   /* ─── FOOTER ─── */
   footer {
@@ -794,7 +868,7 @@
     <li><a href="#itinerary">Itinerary</a></li>
     <li><a href="#dining">Dining</a></li>
     <li><a href="#budget">Budget</a></li>
-    <li><a href="#reflection">Reflection</a></li>
+    <li><a href="#gallery">Gallery</a></li>
     <li><a href="#register">Join Us</a></li>
   </ul>
 </nav>
@@ -874,7 +948,7 @@
       </div>
       <div class="spec-card reveal reveal-delay-2">
         <div class="spec-label">Total Travelers</div>
-        <div class="spec-value">14 Travelers Total</div>
+        <div class="spec-value">14 Pax Total</div>
         <div class="spec-sub">12 Students · 2 Chaperone Leaders</div>
       </div>
       <div class="spec-card reveal reveal-delay-3">
@@ -1171,36 +1245,79 @@
   </div>
 </section>
 
-<!-- ═══════════════════════ REFLECTION ═══════════════════════ -->
-<section id="reflection">
+<!-- ═══════════════════════ PHOTO GALLERY ═══════════════════════ -->
+<section id="gallery">
   <div class="section-inner">
     <div class="reveal">
-      <span class="section-tag">Section 06 · Extras & Reflection</span>
-      <h2 class="section-title">Learner <strong>Reflection</strong></h2>
+      <span class="section-tag">Section 06 · Photo Gallery</span>
+      <h2 class="section-title">Trip <strong>Photography</strong></h2>
       <div class="divider"></div>
-      <p class="section-body">A flexible space for post-trip reflection and documentation — capturing insights gained as a learner, traveler, and student of Global Issues.</p>
+      <p class="section-body">Upload your best shots from the trip — click any slot to add a photo directly from your device. Choose between a 3-photo or 6-photo layout.</p>
     </div>
 
-    <div class="reflection-grid">
-      <div class="reflection-card reveal reveal-delay-1">
-        <div class="reflection-icon">📝</div>
-        <div class="reflection-title">Written Reflection</div>
-        <div class="reflection-desc">Upload a personal self-reflection essay exploring your growth as a learner and global citizen — what shifted in your perspective?</div>
-        <span class="reflection-upload">+ Add Reflection</span>
-      </div>
-      <div class="reflection-card reveal reveal-delay-2">
-        <div class="reflection-icon">📸</div>
-        <div class="reflection-title">Photo Gallery</div>
-        <div class="reflection-desc">Curate a photo essay documenting key moments — site visits, candid group experiences, and visual observations that inform your Global Issues analysis.</div>
-        <span class="reflection-upload">+ Upload Photos</span>
-      </div>
-      <div class="reflection-card reveal reveal-delay-3">
-        <div class="reflection-icon">🌍</div>
-        <div class="reflection-title">Global Issues Analysis</div>
-        <div class="reflection-desc">A structured analytical piece examining what you observed in Bodrum through the lens of heritage preservation, tourism economics, and ethical travel.</div>
-        <span class="reflection-upload">+ Add Analysis</span>
-      </div>
+    <div class="gallery-controls reveal reveal-delay-1">
+      <button class="gallery-toggle-btn active" data-grid="3">3 Photos</button>
+      <button class="gallery-toggle-btn" data-grid="6">6 Photos</button>
     </div>
+
+    <div class="photo-grid grid-3 reveal reveal-delay-2" id="photo-grid">
+      <label class="photo-slot" id="slot-1">
+        <input type="file" accept="image/*" onchange="loadPhoto(this, 'slot-1')" />
+        <img alt="Trip photo 1" />
+        <div class="slot-placeholder">
+          <div class="slot-icon">📷</div>
+          <div class="slot-label">Photo 1</div>
+          <div class="slot-sub">Click to upload</div>
+        </div>
+      </label>
+      <label class="photo-slot" id="slot-2">
+        <input type="file" accept="image/*" onchange="loadPhoto(this, 'slot-2')" />
+        <img alt="Trip photo 2" />
+        <div class="slot-placeholder">
+          <div class="slot-icon">📷</div>
+          <div class="slot-label">Photo 2</div>
+          <div class="slot-sub">Click to upload</div>
+        </div>
+      </label>
+      <label class="photo-slot" id="slot-3">
+        <input type="file" accept="image/*" onchange="loadPhoto(this, 'slot-3')" />
+        <img alt="Trip photo 3" />
+        <div class="slot-placeholder">
+          <div class="slot-icon">📷</div>
+          <div class="slot-label">Photo 3</div>
+          <div class="slot-sub">Click to upload</div>
+        </div>
+      </label>
+      <label class="photo-slot" id="slot-4" style="display:none">
+        <input type="file" accept="image/*" onchange="loadPhoto(this, 'slot-4')" />
+        <img alt="Trip photo 4" />
+        <div class="slot-placeholder">
+          <div class="slot-icon">📷</div>
+          <div class="slot-label">Photo 4</div>
+          <div class="slot-sub">Click to upload</div>
+        </div>
+      </label>
+      <label class="photo-slot" id="slot-5" style="display:none">
+        <input type="file" accept="image/*" onchange="loadPhoto(this, 'slot-5')" />
+        <img alt="Trip photo 5" />
+        <div class="slot-placeholder">
+          <div class="slot-icon">📷</div>
+          <div class="slot-label">Photo 5</div>
+          <div class="slot-sub">Click to upload</div>
+        </div>
+      </label>
+      <label class="photo-slot" id="slot-6" style="display:none">
+        <input type="file" accept="image/*" onchange="loadPhoto(this, 'slot-6')" />
+        <img alt="Trip photo 6" />
+        <div class="slot-placeholder">
+          <div class="slot-icon">📷</div>
+          <div class="slot-label">Photo 6</div>
+          <div class="slot-sub">Click to upload</div>
+        </div>
+      </label>
+    </div>
+
+    <p class="gallery-note reveal reveal-delay-3">Photos are loaded locally in your browser and are not uploaded to any server. They'll appear instantly when you click a slot.</p>
   </div>
 </section>
 
@@ -1242,7 +1359,32 @@
     });
   });
 
-  // ─── SCROLL REVEAL ───
+  // ─── PHOTO GALLERY ───
+  function loadPhoto(input, slotId) {
+    const file = input.files[0];
+    if (!file) return;
+    const slot = document.getElementById(slotId);
+    const img  = slot.querySelector('img');
+    const reader = new FileReader();
+    reader.onload = e => {
+      img.src = e.target.result;
+      slot.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.querySelectorAll('.gallery-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gallery-toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const count = parseInt(btn.dataset.grid);
+      const grid  = document.getElementById('photo-grid');
+      grid.className = `photo-grid grid-${count} reveal visible`;
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById(`slot-${i}`).style.display = i <= count ? '' : 'none';
+      }
+    });
+  });
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
