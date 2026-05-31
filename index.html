@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bodrum — Cultural & Historical Exploration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --aegean:        #0d2d4a;
+    --aegean-mid:    #1a4a6b;
+    --teal:          #2e9e8f;
+    --teal-light:    #4ec8b8;
+    --sand:          #e8dfc8;
+    --cream:         #f5f0e8;
+    --slate:         #1c2533;
+    --slate-light:   #2e3d52;
+    --white:         #ffffff;
+    --text-muted:    #7a8fa6;
+    --gold:          #c9a96e;
+    --gold-light:    #e0c48a;
+    --glass-bg:      rgba(13, 45, 74, 0.55);
+    --glass-border:  rgba(78, 200, 184, 0.18);
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow-card: 0 8px 40px rgba(13,45,74,0.18);
+    --shadow-deep: 0 20px 60px rgba(13,45,74,0.35);
+    --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--slate);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--slate); }
+  ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 0 5vw;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition);
+  }
+  nav.scrolled {
+    background: rgba(13, 29, 47, 0.92);
+    height: 56px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--teal-light);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: var(--transition);
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--teal-light);
+    transform: scaleX(0);
+    transition: var(--transition);
+    transform-origin: center;
+  }
+  .nav-links a:hover { color: var(--teal-light); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* hamburger */
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--cream); border-radius: 2px; transition: var(--transition); }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 800px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(13,29,47,0.97);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      gap: 0;
+      padding: 1rem 0 2rem;
+      transform: translateY(-110%);
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-links.open { transform: translateY(0); }
+    .nav-links a { padding: 0.75rem 5vw; display: block; }
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 100px 5vw 60px;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(46,158,143,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(10,40,70,0.8) 0%, transparent 60%),
+      linear-gradient(170deg, #071828 0%, #0d2d4a 35%, #0f3a5a 60%, #071828 100%);
+    z-index: 0;
+  }
+  /* animated ocean waves */
+  .hero-waves {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 200px;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .wave {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 100%;
+  }
+  .wave svg { width: 100%; height: 100%; }
+  .wave-1 { animation: waveMove 10s linear infinite; opacity: 0.25; }
+  .wave-2 { animation: waveMove 14s linear infinite reverse; opacity: 0.15; transform: translateX(-25%); }
+  @keyframes waveMove {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* floating orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+    animation: drift 12s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 500px; height: 500px; background: rgba(46,158,143,0.08); top: -100px; left: -150px; animation-delay: 0s; }
+  .orb-2 { width: 350px; height: 350px; background: rgba(78,200,184,0.06); top: 30%; right: -80px; animation-delay: -4s; }
+  .orb-3 { width: 280px; height: 280px; background: rgba(201,169,110,0.05); bottom: 100px; left: 30%; animation-delay: -8s; }
+  @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px, 40px) scale(1.08); } }
+
+  /* star dots */
+  .stars {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 80%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 75%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 22%, rgba(255,255,255,0.35) 0%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+  }
+  .hero-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    border: 1px solid rgba(78,200,184,0.35);
+    border-radius: 100px;
+    padding: 6px 18px;
+    margin-bottom: 2rem;
+    background: rgba(78,200,184,0.06);
+    animation: fadeUp 1s 0.2s both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s 0.4s both;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--teal-light);
+    font-weight: 300;
+  }
+  .hero-tagline {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 300;
+    color: rgba(232,223,200,0.8);
+    letter-spacing: 0.05em;
+    margin-bottom: 3rem;
+    animation: fadeUp 1s 0.6s both;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, var(--teal), #1a8070);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: var(--transition);
+    box-shadow: 0 8px 32px rgba(46,158,143,0.4);
+    animation: fadeUp 1s 0.8s both;
+  }
+  .hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(46,158,143,0.55);
+    background: linear-gradient(135deg, var(--teal-light), var(--teal));
+  }
+  .hero-cta svg { width: 16px; height: 16px; }
+
+  .hero-stats {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    animation: fadeUp 1s 1s both;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--teal-light);
+    line-height: 1;
+  }
+  .hero-stat-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 100px 5vw; }
+  section:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+  .section-inner { max-width: 1180px; margin: 0 auto; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .section-title strong { font-weight: 600; color: var(--gold-light); }
+  .section-body {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(232,223,200,0.8);
+    max-width: 720px;
+    line-height: 1.9;
+  }
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    margin: 1.5rem 0;
+  }
+
+  /* ─── SITUATION PROFILE ─── */
+  #situation .mission-block {
+    background: linear-gradient(135deg, rgba(46,158,143,0.08), rgba(13,45,74,0.4));
+    border: 1px solid rgba(46,158,143,0.2);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 3rem;
+    margin: 2.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #situation .mission-block::before {
+    content: '"';
+    position: absolute;
+    top: -20px; left: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12rem;
+    color: rgba(78,200,184,0.06);
+    line-height: 1;
+  }
+  #situation .mission-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.8;
+    color: rgba(232,223,200,0.9);
+    position: relative;
+  }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .spec-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 2rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .spec-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--teal), transparent);
+    border-radius: 2px 0 0 2px;
+  }
+  .spec-card:hover { background: rgba(46,158,143,0.07); border-color: rgba(46,158,143,0.25); transform: translateY(-4px); box-shadow: var(--shadow-card); }
+  .spec-label { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+  .spec-value { font-size: 1.05rem; font-weight: 500; color: var(--white); line-height: 1.4; }
+  .spec-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; font-weight: 300; }
+
+  /* ─── GLOBAL ISSUE ─── */
+  #global-issue .gi-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+  @media (max-width: 768px) { #global-issue .gi-split { grid-template-columns: 1fr; } }
+
+  .gi-visual {
+    border-radius: var(--radius-lg);
+    background: linear-gradient(145deg, rgba(13,45,74,0.8), rgba(46,158,143,0.15));
+    border: 1px solid rgba(46,158,143,0.2);
+    padding: 2.5rem;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .gi-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 50% 120%, rgba(46,158,143,0.2) 0%, transparent 70%);
+  }
+  .gi-icon-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .gi-pill {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--teal-light);
+    border: 1px solid rgba(78,200,184,0.3);
+    border-radius: 100px;
+    padding: 5px 12px;
+    background: rgba(78,200,184,0.06);
+    white-space: nowrap;
+  }
+  .gi-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--white);
+    position: relative;
+  }
+  .gi-stat { position: relative; }
+  .gi-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 600; color: var(--gold-light); line-height: 1; }
+  .gi-stat-desc { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; }
+
+  .gi-points { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
+  .gi-points li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+  }
+  .gi-points li:hover { background: rgba(46,158,143,0.06); border-color: rgba(46,158,143,0.2); }
+  .gi-point-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .gi-point-title { font-size: 0.85rem; font-weight: 600; color: var(--white); margin-bottom: 4px; letter-spacing: 0.03em; }
+  .gi-point-text { font-size: 0.82rem; color: var(--text-muted); font-weight: 300; line-height: 1.7; }
+
+  /* ─── ITINERARY ─── */
+  #itinerary .itin-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+  @media (max-width: 900px) { #itinerary .itin-layout { grid-template-columns: 1fr; } }
+
+  .map-placeholder {
+    border-radius: var(--radius-lg);
+    background: linear-gradient(145deg, #0a1e30, #0f2d45);
+    border: 1px solid rgba(46,158,143,0.25);
+    overflow: hidden;
+    min-height: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .map-placeholder .map-embed {
+    width: 100%;
+    height: 100%;
+    min-height: 460px;
+    border: none;
+    display: block;
+  }
+  .map-label {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: rgba(7,24,40,0.8);
+    padding: 4px 12px;
+    border-radius: 100px;
+    pointer-events: none;
+  }
+
+  .itin-sites h3 {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1.25rem;
+  }
+  .site-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2rem; }
+  .site-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.9rem;
+    color: rgba(232,223,200,0.85);
+    font-weight: 300;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition);
+  }
+  .site-list li:hover { color: var(--white); padding-left: 6px; }
+  .site-list li span.dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--teal);
+    flex-shrink: 0;
+  }
+  .site-list li span.dot-gold {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ─── DINING ─── */
+  #dining .meal-section { margin-bottom: 3.5rem; }
+  #dining .meal-section h3 {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  #dining .meal-section h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,169,110,0.3), transparent);
+  }
+
+  .dining-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .dining-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: var(--transition);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .dining-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    opacity: 0;
+    transition: var(--transition);
+  }
+  .dining-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-card); background: rgba(46,158,143,0.06); border-color: rgba(46,158,143,0.2); }
+  .dining-card:hover::before { opacity: 1; }
+  .dining-name { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+  .dining-desc { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; line-height: 1.65; }
+  .dining-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 100px;
+    margin-top: 0.75rem;
+    font-weight: 600;
+  }
+  .tag-breakfast { background: rgba(201,169,110,0.12); color: var(--gold-light); border: 1px solid rgba(201,169,110,0.2); }
+  .tag-lunch { background: rgba(46,158,143,0.1); color: var(--teal-light); border: 1px solid rgba(46,158,143,0.2); }
+  .tag-dinner { background: rgba(30,70,120,0.25); color: #7eb8e8; border: 1px solid rgba(78,150,220,0.2); }
+
+  /* ─── BUDGET ─── */
+  #budget .budget-wrapper {
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 2.5rem;
+  }
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .budget-table thead tr {
+    background: linear-gradient(90deg, rgba(13,45,74,0.9), rgba(46,158,143,0.15));
+  }
+  .budget-table th {
+    padding: 1.1rem 1.5rem;
+    text-align: left;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    font-weight: 600;
+    border-bottom: 1px solid rgba(46,158,143,0.2);
+    white-space: nowrap;
+  }
+  .budget-table td {
+    padding: 1rem 1.5rem;
+    font-size: 0.88rem;
+    color: rgba(232,223,200,0.85);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: top;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tbody tr { transition: var(--transition); }
+  .budget-table tbody tr:hover { background: rgba(46,158,143,0.05); }
+  .budget-table .grand-total td {
+    background: linear-gradient(90deg, rgba(46,158,143,0.12), rgba(13,45,74,0.6));
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(46,158,143,0.3);
+  }
+  .budget-table .grand-total td:first-child { color: var(--gold-light); }
+  .amount { font-family: 'Outfit', monospace; color: var(--white); font-weight: 500; }
+  .amount-grand { color: var(--teal-light); font-size: 1.05rem; }
+
+  .footnote-box {
+    margin: 2rem 0 0;
+    padding: 1.25rem 1.75rem;
+    background: linear-gradient(135deg, rgba(201,169,110,0.08), rgba(13,45,74,0.3));
+    border: 1px solid rgba(201,169,110,0.2);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    color: rgba(232,223,200,0.8);
+    font-weight: 300;
+    line-height: 1.8;
+  }
+  .footnote-box strong { color: var(--gold-light); font-weight: 600; }
+
+  .budget-scroll { overflow-x: auto; }
+
+  /* ─── REFLECTION ─── */
+  #reflection .reflection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 900px) { #reflection .reflection-grid { grid-template-columns: 1fr; } }
+
+  .reflection-card {
+    border-radius: var(--radius-lg);
+    border: 1px dashed rgba(255,255,255,0.1);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 280px;
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,0.01);
+  }
+  .reflection-card:hover { border-color: rgba(46,158,143,0.3); background: rgba(46,158,143,0.04); transform: translateY(-4px); }
+  .reflection-icon { font-size: 2.5rem; margin-bottom: 1.25rem; opacity: 0.7; }
+  .reflection-title { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 0.5rem; }
+  .reflection-desc { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; line-height: 1.7; }
+  .reflection-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 1.25rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    border: 1px solid rgba(46,158,143,0.3);
+    border-radius: 100px;
+    padding: 5px 14px;
+    transition: var(--transition);
+  }
+  .reflection-card:hover .reflection-upload { background: rgba(46,158,143,0.1); color: var(--teal-light); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: rgba(5,15,28,0.95);
+    border-top: 1px solid rgba(46,158,143,0.12);
+    padding: 4rem 5vw;
+    text-align: center;
+  }
+  #register {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--teal-light);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+  .footer-tagline { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2.5rem; }
+  .footer-cta-block { margin-bottom: 2rem; }
+  .footer-cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+  .footer-cta-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.75rem; font-weight: 300; }
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 40px;
+    background: transparent;
+    color: var(--teal-light);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(78,200,184,0.4);
+    border-radius: 100px;
+    transition: var(--transition);
+  }
+  .footer-btn:hover { background: rgba(78,200,184,0.08); border-color: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(46,158,143,0.2); }
+  .footer-copy { margin-top: 3rem; font-size: 0.72rem; color: rgba(122,143,166,0.5); letter-spacing: 0.08em; }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.23,1,0.32,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── MOBILE ADJUSTMENTS ─── */
+  @media (max-width: 600px) {
+    section { padding: 70px 5vw; }
+    #situation .mission-block { padding: 1.75rem; }
+    .budget-table th, .budget-table td { padding: 0.75rem 1rem; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">BODRUM · OOK</a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#situation">Overview</a></li>
+    <li><a href="#global-issue">Global Issue</a></li>
+    <li><a href="#itinerary">Itinerary</a></li>
+    <li><a href="#dining">Dining</a></li>
+    <li><a href="#budget">Budget</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+    <li><a href="#register">Join Us</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="stars"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-label">Out-of-Kingdom Proposal · Bodrum, Turkey</div>
+    <h1 class="hero-title">Bodrum <em>Cultural &<br>Historical</em> Exploration</h1>
+    <p class="hero-tagline">Explore the world. Discover yourself. Make an Impact.</p>
+    <a href="#register" class="hero-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Interested in joining us?
+    </a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">14</div>
+      <div class="hero-stat-label">Travelers</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">Nights</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">3,000+</div>
+      <div class="hero-stat-label">Years of History</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">2</div>
+      <div class="hero-stat-label">Chaperone Leaders</div>
+    </div>
+  </div>
+
+  <div class="hero-waves">
+    <div class="wave wave-1">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z" fill="rgba(46,158,143,0.15)"/>
+        <path d="M0,80 C240,40 480,100 720,70 C960,40 1200,90 1440,80 L1440,120 L0,120 Z" fill="rgba(13,45,74,0.3)"/>
+      </svg>
+    </div>
+    <div class="wave wave-2">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,40 C480,100 960,10 1440,50 L1440,120 L0,120 Z" fill="rgba(78,200,184,0.08)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SITUATION PROFILE ═══════════════════════ -->
+<section id="situation">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Section 01 · Situation Profile</span>
+      <h2 class="section-title">A <strong>Research-Based</strong> Approach</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="mission-block reveal reveal-delay-1">
+      <p class="mission-text">
+        "The privilege of international travel comes with the responsibility to engage mindfully and ethically. This proposal outlines a comprehensive cultural and historical immersion into Bodrum, Turkey. By stepping away from our normal routines, students find opportunities for shared conversation, historical education, and well-being."
+      </p>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card reveal reveal-delay-1">
+        <div class="spec-label">Destination</div>
+        <div class="spec-value">Bodrum, Turkey</div>
+        <div class="spec-sub">Aegean Coast — Muğla Province</div>
+      </div>
+      <div class="spec-card reveal reveal-delay-2">
+        <div class="spec-label">Total Travelers</div>
+        <div class="spec-value">14 Pax Total</div>
+        <div class="spec-sub">12 Students · 2 Chaperone Leaders</div>
+      </div>
+      <div class="spec-card reveal reveal-delay-3">
+        <div class="spec-label">Base Camp Lodging</div>
+        <div class="spec-value">Gümüşlük Ümit Villa</div>
+        <div class="spec-sub">A secure, collaborative residential environment encouraging group interaction and well-being</div>
+      </div>
+      <div class="spec-card reveal reveal-delay-4">
+        <div class="spec-label">Duration</div>
+        <div class="spec-value">7 Nights / 8 Days</div>
+        <div class="spec-sub">Full cultural immersion program</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ GLOBAL ISSUE ═══════════════════════ -->
+<section id="global-issue">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Section 02 · Global Issue</span>
+      <h2 class="section-title">Heritage <strong>vs.</strong> Modernity</h2>
+      <div class="divider"></div>
+      <p class="section-body">Balancing rapid modern tourism development with the preservation of irreplaceable historical sites. Students will investigate a living tension playing out on the Aegean coast.</p>
+    </div>
+
+    <div class="gi-split">
+      <div class="gi-visual reveal reveal-delay-1">
+        <div class="gi-icon-row">
+          <span class="gi-pill">Heritage Preservation</span>
+          <span class="gi-pill">Maritime Culture</span>
+          <span class="gi-pill">Sustainable Tourism</span>
+        </div>
+        <div class="gi-headline">Where ancient ruins meet luxury marinas</div>
+        <div class="gi-stat">
+          <div class="gi-stat-num">2,500+</div>
+          <div class="gi-stat-desc">years of continuous civilization in Bodrum / Halicarnassus</div>
+        </div>
+      </div>
+
+      <ul class="gi-points reveal reveal-delay-2">
+        <li>
+          <span class="gi-point-icon">🏛️</span>
+          <div>
+            <div class="gi-point-title">Ancient Heritage at Risk</div>
+            <div class="gi-point-text">Students analyze the Mausoleum at Halicarnassus and Myndos Gate — the historic battleground of Alexander the Great — and study the pressures modern development places on these irreplaceable sites.</div>
+          </div>
+        </li>
+        <li>
+          <span class="gi-point-icon">⚓</span>
+          <div>
+            <div class="gi-point-title">Displacement of Local Communities</div>
+            <div class="gi-point-text">The high-end Yalıkavak Marina exemplifies how luxury infrastructure transforms traditional fishing villages — students investigate the socioeconomic ripple effects on local livelihoods.</div>
+          </div>
+        </li>
+        <li>
+          <span class="gi-point-icon">🌊</span>
+          <div>
+            <div class="gi-point-title">Underwater Archaeology</div>
+            <div class="gi-point-text">The Bodrum Museum of Underwater Archaeology — housed inside a Crusader castle — preserves shipwrecks and Bronze Age artifacts, offering insight into how we curate contested maritime heritage.</div>
+          </div>
+        </li>
+        <li>
+          <span class="gi-point-icon">🧭</span>
+          <div>
+            <div class="gi-point-title">Ethical Travel Praxis</div>
+            <div class="gi-point-text">Students engage as mindful observers — not passive tourists — documenting their findings and forming evidence-based responses to complex global development questions.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ ITINERARY ═══════════════════════ -->
+<section id="itinerary">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Section 03 · MyMaps Itinerary</span>
+      <h2 class="section-title">Interactive <strong>Tour Map</strong></h2>
+      <div class="divider"></div>
+      <p class="section-body">Pinned destinations across Bodrum's coast — from ancient ruins to undeveloped island escapes. Click any marker for full site details.</p>
+    </div>
+
+    <div class="itin-layout">
+      <div class="map-placeholder reveal reveal-delay-1">
+        <!-- Replace src with your Google My Maps embed URL -->
+        <iframe
+          class="map-embed"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d99920.44040088753!2d27.3269!3d37.0342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14be87d34b2c7b85%3A0x5c0893d7e5b4b5e5!2sBodrum%2C%20Mu%C4%9Fla%2C%20Turkey!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Bodrum Itinerary Map">
+        </iframe>
+        <div class="map-label">Replace with your Google My Maps embed URL</div>
+      </div>
+
+      <div class="itin-sites reveal reveal-delay-2">
+        <h3>Core Historical Sites</h3>
+        <ul class="site-list">
+          <li><span class="dot"></span>Bodrum Castle (Castle of St. Peter)</li>
+          <li><span class="dot"></span>Bodrum Museum of Underwater Archaeology</li>
+          <li><span class="dot"></span>Mausoleum at Halicarnassus</li>
+          <li><span class="dot"></span>Ancient Bodrum Theater</li>
+          <li><span class="dot"></span>Historic Windmills</li>
+          <li><span class="dot"></span>Myndos Gate — Battleground of Alexander the Great</li>
+        </ul>
+
+        <h3>Group Excursion</h3>
+        <ul class="site-list">
+          <li><span class="dot-gold"></span>Orak Island — Rustic, undeveloped island accessible by boat. Study of natural geography and maritime landscapes.</li>
+        </ul>
+
+        <h3>Modern Context Sites</h3>
+        <ul class="site-list">
+          <li><span class="dot"></span>Yalıkavak Marina — High-end marina development</li>
+          <li><span class="dot"></span>Gümüşlük Village — Traditional fishing community</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ DINING ═══════════════════════ -->
+<section id="dining">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Section 04 · Dining Profiles</span>
+      <h2 class="section-title">Premium <strong>Dining</strong> Selections</h2>
+      <div class="divider"></div>
+      <p class="section-body">Every meal is carefully curated to reflect the culinary identity of the Aegean coast — from bohemian garden breakfasts to historic courtyard lunches and beachfront dinners.</p>
+    </div>
+
+    <!-- BREAKFASTS -->
+    <div class="meal-section reveal reveal-delay-1" style="margin-top:3rem;">
+      <h3>Breakfasts</h3>
+      <div class="dining-grid">
+        <div class="dining-card">
+          <div class="dining-name">Limon Gümüşlük</div>
+          <div class="dining-desc">A bohemian hillside garden café overlooking Gümüşlük Bay. Morning light through olive trees makes this an unforgettable start to the day.</div>
+          <span class="dining-tag tag-breakfast">Breakfast</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Teldolap Café & Restaurant</div>
+          <div class="dining-desc">Scenic cliffside terrace dining with panoramic views of the Aegean. A serene, elevated setting for the group to start mornings together.</div>
+          <span class="dining-tag tag-breakfast">Breakfast</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LUNCHES -->
+    <div class="meal-section reveal reveal-delay-2">
+      <h3>Lunches</h3>
+      <div class="dining-grid">
+        <div class="dining-card">
+          <div class="dining-name">Avlu Bodrum</div>
+          <div class="dining-desc">Historic stone building courtyard — a protected architectural gem at the heart of Bodrum's old town serving seasonal Aegean cuisine.</div>
+          <span class="dining-tag tag-lunch">Lunch</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Antik Akdeniz</div>
+          <div class="dining-desc">Authentic center-town wood-fired pide restaurant. A local staple offering traditional flavors in a no-frills, genuine setting.</div>
+          <span class="dining-tag tag-lunch">Lunch</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Kocadon Restaurant</div>
+          <div class="dining-desc">A restored 19th-century courtyard villa turned restaurant — ornate stone archways, vine-covered walls, and Aegean mezze.</div>
+          <span class="dining-tag tag-lunch">Lunch</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Sünger Pizza</div>
+          <div class="dining-desc">A famous Bodrum harbor landmark operating since 1992. Legendary thin-crust pizzas beloved by locals and travelers alike.</div>
+          <span class="dining-tag tag-lunch">Lunch</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Kitchenette Yalıkavak</div>
+          <div class="dining-desc">Contemporary café-bistro at the marina. A refined mid-trip stop that bridges the global and the local.</div>
+          <span class="dining-tag tag-lunch">Lunch</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">La Pasion Cafe</div>
+          <div class="dining-desc">An artistic courtyard sanctuary tucked into Bodrum's back lanes — creative dishes, warm terracotta walls, and a soulful atmosphere.</div>
+          <span class="dining-tag tag-lunch">Lunch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DINNERS -->
+    <div class="meal-section reveal reveal-delay-3">
+      <h3>Dinners</h3>
+      <div class="dining-grid">
+        <div class="dining-card">
+          <div class="dining-name">Frenk Bodrum</div>
+          <div class="dining-desc">Vibrant harbor café with a buzzing evening atmosphere — a perfect first-night introduction to Bodrum's social pulse.</div>
+          <span class="dining-tag tag-dinner">Dinner</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Aquarium Balık Restaurant</div>
+          <div class="dining-desc">A truly extraordinary dining experience — tables positioned right beside the sunken ancient ruins of Myndos. History meets fresh seafood.</div>
+          <span class="dining-tag tag-dinner">Dinner</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Yarbasan Restaurant</div>
+          <div class="dining-desc">Historically modeled stone village complex recreating the architecture and atmosphere of a classic Turkish settlement.</div>
+          <span class="dining-tag tag-dinner">Dinner</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Windmills Dağbelen</div>
+          <div class="dining-desc">High-altitude mountain ridge terrace dining overlooking the entire Bodrum peninsula. Sunsets here are legendary.</div>
+          <span class="dining-tag tag-dinner">Dinner</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Sait Restaurant</div>
+          <div class="dining-desc">Luxury marina waterfront dining at Yalıkavak. Immaculate service, premium fresh catch, and a refined setting for a reflective group dinner.</div>
+          <span class="dining-tag tag-dinner">Dinner</span>
+        </div>
+        <div class="dining-card">
+          <div class="dining-name">Berk Balık Restaurant</div>
+          <div class="dining-desc">Beachfront dining looking directly back at the illuminated Bodrum Castle fortress glowing over the harbor. A breathtaking final evening.</div>
+          <span class="dining-tag tag-dinner">Dinner</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ BUDGET ═══════════════════════ -->
+<section id="budget">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Section 05 · Cost Sheet</span>
+      <h2 class="section-title">Budget <strong>Tracker</strong></h2>
+      <div class="divider"></div>
+      <p class="section-body">A fully itemized financial proposal covering all trip components — transparently presented for approval and stakeholder review.</p>
+    </div>
+
+    <div class="budget-wrapper reveal reveal-delay-1">
+      <div class="budget-scroll">
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th>Category / Item</th>
+              <th>Total Cost (USD)</th>
+              <th>Per Person (USD)</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--white)">✈️ Airfare</strong></td>
+              <td><span class="amount">$7,016.00</span></td>
+              <td><span class="amount">$501.14</span></td>
+              <td>Group travel includes a 10% safety buffer due to return policy requirements.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--white)">🚗 Car Rental</strong></td>
+              <td><span class="amount">$970.00</span></td>
+              <td><span class="amount">$69.29</span></td>
+              <td>Covers all ground transport for 14 pax.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--white)">🏡 Gümüşlük Ümit Villa</strong></td>
+              <td><span class="amount">$4,070.00</span></td>
+              <td><span class="amount">$290.71</span></td>
+              <td>7 nights total. Secure, collaborative residential environment.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--white)">🎟️ Activities & Museums</strong></td>
+              <td><span class="amount">$715.00</span></td>
+              <td><span class="amount">$51.07</span></td>
+              <td>Covers Castle, Underwater Museum, Mausoleum, Orak Island boat excursion.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--white)">🍽️ Dining Total (7 Days)</strong></td>
+              <td><span class="amount">$4,580.00</span></td>
+              <td><span class="amount">$327.14</span></td>
+              <td>Fully budgeted for all breakfasts, lunches, and dinners throughout the trip.</td>
+            </tr>
+            <tr class="grand-total">
+              <td>🌟 GRAND TOTAL</td>
+              <td><span class="amount amount-grand">$17,351.00</span></td>
+              <td><span class="amount amount-grand">$1,239.46*</span></td>
+              <td style="color:rgba(232,223,200,0.7)">Final budgeted proposal cost.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footnote-box reveal reveal-delay-2">
+      <strong>* Note:</strong> Final collected student fee is calculated at <strong>$1,445.92</strong> to carefully absorb the costs of the 2 required chaperone leaders and maintain a strict emergency safety cushion. This ensures full trip coverage with zero hidden charges to student participants.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ REFLECTION ═══════════════════════ -->
+<section id="reflection">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Section 06 · Extras & Reflection</span>
+      <h2 class="section-title">Learner <strong>Reflection</strong></h2>
+      <div class="divider"></div>
+      <p class="section-body">A flexible space for post-trip reflection and documentation — capturing insights gained as a learner, traveler, and student of Global Issues.</p>
+    </div>
+
+    <div class="reflection-grid">
+      <div class="reflection-card reveal reveal-delay-1">
+        <div class="reflection-icon">📝</div>
+        <div class="reflection-title">Written Reflection</div>
+        <div class="reflection-desc">Upload a personal self-reflection essay exploring your growth as a learner and global citizen — what shifted in your perspective?</div>
+        <span class="reflection-upload">+ Add Reflection</span>
+      </div>
+      <div class="reflection-card reveal reveal-delay-2">
+        <div class="reflection-icon">📸</div>
+        <div class="reflection-title">Photo Gallery</div>
+        <div class="reflection-desc">Curate a photo essay documenting key moments — site visits, candid group experiences, and visual observations that inform your Global Issues analysis.</div>
+        <span class="reflection-upload">+ Upload Photos</span>
+      </div>
+      <div class="reflection-card reveal reveal-delay-3">
+        <div class="reflection-icon">🌍</div>
+        <div class="reflection-title">Global Issues Analysis</div>
+        <div class="reflection-desc">A structured analytical piece examining what you observed in Bodrum through the lens of heritage preservation, tourism economics, and ethical travel.</div>
+        <span class="reflection-upload">+ Add Analysis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <div id="register">
+    <div class="footer-logo">Bodrum · OOK</div>
+    <div class="footer-tagline">Cultural & Historical Exploration · Turkey</div>
+    <div class="footer-cta-block">
+      <div class="footer-cta-title">Interested in joining us?</div>
+      <div class="footer-cta-desc">Reach out to your trip coordinator to express your interest, ask questions, or begin the registration process for this once-in-a-lifetime experience.</div>
+      <a href="mailto:tripcoordinator@school.edu" class="footer-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Express Your Interest
+      </a>
+    </div>
+    <div class="footer-copy">© 2025 Bodrum OOK Proposal · School Global Issues Project · Bodrum, Turkey</div>
+  </div>
+</footer>
+
+<script>
+  // ─── NAV SCROLL STATE ───
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ─── MOBILE NAV TOGGLE ───
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    links.classList.toggle('open');
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      toggle.classList.remove('open');
+      links.classList.remove('open');
+    });
+  });
+
+  // ─── SCROLL REVEAL ───
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
